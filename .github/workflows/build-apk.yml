@@ -20,7 +20,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: package-lock.json
 
       - name: Set up Java
         uses: actions/setup-java@v5
@@ -35,6 +34,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund --registry=https://registry.npmjs.org/ --replace-registry-host=always
+
+      - name: Align Expo dependencies
+        run: npx expo install --fix
+
+      - name: Check Expo configuration
+        run: npx expo-doctor
 
       - name: Generate Android project
         run: npx expo prebuild --platform android --no-install
