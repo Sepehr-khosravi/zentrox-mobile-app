@@ -6,10 +6,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
-    name: Build Expo Android APK
+    name: Upgrade Expo and Build APK
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      npm_config_legacy_peer_deps: true
 
     steps:
       - name: Checkout repository
@@ -22,7 +29,7 @@ jobs:
           cache: npm
 
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
@@ -30,19 +37,34 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: 'platform-tools'
+          packages: platform-tools
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund --registry=https://registry.npmjs.org/ --replace-registry-host=always
-
-      - name: Print installed package versions
+      - name: Upgrade Expo to SDK 53
         run: |
-          npm ls expo expo-linear-gradient expo-modules-core react-native react-native-reanimated || true
+          npm install 'expo@~53.0.0' --save --no-audit --no-fund
+
+      - name: Align dependencies with Expo SDK 53
+        run: |
+          npx expo install --fix
+          npx expo install expo-linear-gradient
+
+      - name: Align older transitive dependencies
+        run: |
+          npm pkg set 'overrides.expo-linear-gradient=$expo-linear-gradient'
+          npm pkg set 'overrides.react-native-reanimated=$react-native-reanimated'
+          npm install --no-audit --no-fund
+
+      - name: Show installed dependency versions
+        run: |
+          npm ls expo expo-linear-gradient expo-modules-core react react-native react-native-reanimated || true
 
       - name: Check Expo configuration
         run: npx expo config --type public
 
-      - name: Generate clean Android project
+      - name: Run Expo Doctor
+        run: npx expo-doctor || true
+
+      - name: Generate Android project
         run: npx expo prebuild --platform android --clean --no-install
 
       - name: Build debug APK
