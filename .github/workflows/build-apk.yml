@@ -6,23 +6,10 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
-concurrency:
-  group: zentrox-android-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
-    name: Build Android APK
+    name: Build Expo Android APK
     runs-on: ubuntu-latest
-    timeout-minutes: 45
-
-    env:
-      CI: "1"
-      EXPO_NO_TELEMETRY: "1"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true"
 
     steps:
       - name: Checkout repository
@@ -31,52 +18,36 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 22
           cache: npm
-          cache-dependency-path: package-lock.json
-
-      - name: Configure npm
-        run: |
-          npm config set registry https://registry.npmjs.org/
-          npm config set fetch-retries 5
-          npm config set fetch-retry-mintimeout 20000
-          npm config set fetch-retry-maxtimeout 120000
-          npm config set fetch-timeout 300000
-
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund --registry=https://registry.npmjs.org/
-        timeout-minutes: 15
-
-      - name: Generate Android project
-        run: npx expo prebuild --platform android --no-install
-        timeout-minutes: 10
 
       - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: "17"
-          cache: gradle
-          cache-dependency-path: |
-            android/**/*.gradle*
-            android/**/gradle-wrapper.properties
-            android/gradle/libs.versions.toml
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Generate Android project
+        run: npx expo prebuild --platform android
 
       - name: Build debug APK
+        working-directory: android
         run: |
-          chmod +x android/gradlew
-          cd android
-          ./gradlew assembleDebug \
-            --no-daemon \
-            --build-cache \
-            --parallel \
-            --stacktrace
-        timeout-minutes: 25
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Zentrox-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 14
