@@ -35,20 +35,15 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund --registry=https://registry.npmjs.org/ --replace-registry-host=always
 
-      - name: Align Expo dependencies
-        run: npx expo install --fix
-
       - name: Print installed package versions
         run: |
-          npm ls expo expo-modules-core expo-linear-gradient react-native --depth=2 || true
-          node -e "for (const p of ['expo','expo-modules-core','expo-linear-gradient','react-native']) { try { const j=require(p+'/package.json'); console.log(p+': '+j.version); } catch(e) { console.log(p+': NOT FOUND'); } }"
+          npm ls expo expo-linear-gradient expo-modules-core react-native react-native-reanimated || true
 
-      - name: Generate Android project
-        run: npx expo prebuild --platform android --no-install
+      - name: Check Expo configuration
+        run: npx expo config --type public
 
-      - name: Print Gradle version
-        working-directory: android
-        run: cat gradle/wrapper/gradle-wrapper.properties
+      - name: Generate clean Android project
+        run: npx expo prebuild --platform android --clean --no-install
 
       - name: Build debug APK
         working-directory: android
