@@ -11,12 +11,14 @@ permissions:
 
 jobs:
   build:
-    name: Upgrade Expo and Build APK
+    name: Upgrade Expo and Build Release APK
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     env:
       npm_config_legacy_peer_deps: true
+      npm_config_fetch_retries: 5
+      npm_config_fetch_timeout: 120000
 
     steps:
       - name: Checkout repository
@@ -25,7 +27,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
           cache: npm
 
       - name: Set up Java
@@ -48,15 +50,15 @@ jobs:
           npx expo install --fix
           npx expo install expo-linear-gradient
 
-      - name: Align older transitive dependencies
+      - name: Apply compatible dependency overrides
         run: |
           npm pkg set 'overrides.expo-linear-gradient=$expo-linear-gradient'
           npm pkg set 'overrides.react-native-reanimated=$react-native-reanimated'
           npm install --no-audit --no-fund
 
-      - name: Show installed dependency versions
+      - name: Verify installed dependencies
         run: |
-          npm ls expo expo-linear-gradient expo-modules-core react react-native react-native-reanimated || true
+          npm ls expo expo-linear-gradient expo-modules-core react react-native react-native-reanimated
 
       - name: Check Expo configuration
         run: npx expo config --type public
@@ -64,7 +66,10 @@ jobs:
       - name: Run Expo Doctor
         run: npx expo-doctor || true
 
-      - name: Generate Android project
+      - name: Test Android JavaScript bundle
+        run: npx expo export --platform android
+
+      - name: Generate clean Android project
         run: npx expo prebuild --platform android --clean --no-install
 
       - name: Build standalone release APK
@@ -73,10 +78,10 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleRelease
 
-      - name: Upload APK
+      - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
           name: Zentrox-Android-APK
-          path: android/app/build/outputs/apk/debug/*.apk
+          path: android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
           retention-days: 14
