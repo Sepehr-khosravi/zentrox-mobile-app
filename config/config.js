@@ -9,51 +9,51 @@ module.exports = {
         backgroundNotification: "#262626"
     },
 
-    serverAddress: "https://zentrox-app-backend.vercel.app",
+    serverAddress: "zentrox-app-backend.onrender.com",
 
     api: {
-        checkUser: "https://zentrox-app-backend.vercel.app/api/checkUser",
-        getId: "https://zentrox-app-backend.vercel.app/api/auth/id",
-        verifyToken: "https://zentrox-app-backend.vercel.app/api/auth/verify",
-        login: "https://zentrox-app-backend.vercel.app/api/auth/login",
-        register: "https://zentrox-app-backend.vercel.app/api/auth/register",
+        checkUser: "zentrox-app-backend.onrender.com/api/checkUser",
+        getId: "zentrox-app-backend.onrender.com/api/auth/id",
+        verifyToken: "zentrox-app-backend.onrender.com/api/auth/verify",
+        login: "zentrox-app-backend.onrender.com/api/auth/login",
+        register: "zentrox-app-backend.onrender.com/api/auth/register",
 
-        getPostS: "https://zentrox-app-backend.vercel.app/api/post/special",
-        getAPost: "https://zentrox-app-backend.vercel.app/api/post/get",
-        explore: "https://zentrox-app-backend.vercel.app/api/explore/posts",
-        uploadPost: "https://zentrox-app-backend.vercel.app/api/post/upload",
-        like: "https://zentrox-app-backend.vercel.app/api/post/like",
+        getPostS: "zentrox-app-backend.onrender.com/api/post/special",
+        getAPost: "zentrox-app-backend.onrender.com/api/post/get",
+        explore: "zentrox-app-backend.onrender.com/api/explore/posts",
+        uploadPost: "zentrox-app-backend.onrender.com/api/post/upload",
+        like: "zentrox-app-backend.onrender.com/api/post/like",
 
-        checkPremium: "https://zentrox-app-backend.vercel.app/api/auth/premium",
+        checkPremium: "zentrox-app-backend.onrender.com/api/auth/premium",
 
-        getComments: "https://zentrox-app-backend.vercel.app/api/post/comment",
-        uploadComment: "https://zentrox-app-backend.vercel.app/api/post/comment/upload",
-        deleteComment: "https://zentrox-app-backend.vercel.app/api/post/comment/delete",
+        getComments: "zentrox-app-backend.onrender.com/api/post/comment",
+        uploadComment: "zentrox-app-backend.onrender.com/api/post/comment/upload",
+        deleteComment: "zentrox-app-backend.onrender.com/api/post/comment/delete",
 
-        getProfile: "https://zentrox-app-backend.vercel.app/api/dashboard/profile",
-        openUserProfileGet: "https://zentrox-app-backend.vercel.app/api/post/open",
-        changeName: "https://zentrox-app-backend.vercel.app/api/dashboard/change/name",
-        deleteAcount: "https://zentrox-app-backend.vercel.app/api/dashboard/delete",
-        getSelfePost: "https://zentrox-app-backend.vercel.app/api/dashboard/posts",
+        getProfile: "zentrox-app-backend.onrender.com/api/dashboard/profile",
+        openUserProfileGet: "zentrox-app-backend.onrender.com/api/post/open",
+        changeName: "zentrox-app-backend.onrender.com/api/dashboard/change/name",
+        deleteAcount: "zentrox-app-backend.onrender.com/api/dashboard/delete",
+        getSelfePost: "zentrox-app-backend.onrender.com/api/dashboard/posts",
 
-        searchTheUsers: "https://zentrox-app-backend.vercel.app/api/search/users",
-        searchThePosts: "https://zentrox-app-backend.vercel.app/api/search/posts",
-        searchThePostsJustWithTilte: "https://zentrox-app-backend.vercel.app/api/search/posts/title",
+        searchTheUsers: "zentrox-app-backend.onrender.com/api/search/users",
+        searchThePosts: "zentrox-app-backend.onrender.com/api/search/posts",
+        searchThePostsJustWithTilte: "zentrox-app-backend.onrender.com/api/search/posts/title",
 
-        adminGetUsers: "https://zentrox-app-backend.vercel.app/api/admin/getUsers",
-        adminGetPosts: "https://zentrox-app-backend.vercel.app/api/admin/getPosts",
-        adminDeleteUser: "https://zentrox-app-backend.vercel.app/api/admin/deleteUser",
-        adminEditPost: "https://zentrox-app-backend.vercel.app/api/admin/editPost",
-        adminEditUser: "https://zentrox-app-backend.vercel.app/api/admin/editUser",
-        adminHidePost: "https://zentrox-app-backend.vercel.app/api/admin/hide",
+        adminGetUsers: "zentrox-app-backend.onrender.com/api/admin/getUsers",
+        adminGetPosts: "zentrox-app-backend.onrender.com/api/admin/getPosts",
+        adminDeleteUser: "zentrox-app-backend.onrender.com/api/admin/deleteUser",
+        adminEditPost: "zentrox-app-backend.onrender.com/api/admin/editPost",
+        adminEditUser: "zentrox-app-backend.onrender.com/api/admin/editUser",
+        adminHidePost: "zentrox-app-backend.onrender.com/api/admin/hide",
 
-        getNotifications: "https://zentrox-app-backend.vercel.app/api/notification/get",
-        sendNotification: "https://zentrox-app-backend.vercel.app/api/notification/send",
+        getNotifications: "zentrox-app-backend.onrender.com/api/notification/get",
+        sendNotification: "zentrox-app-backend.onrender.com/api/notification/send",
 
-        openDm: "https://zentrox-app-backend.vercel.app/api/chat/openDm",
-        getConversations: "https://zentrox-app-backend.vercel.app/api/chat/conversations",
-        sendFriendRequest: "https://zentrox-app-backend.vercel.app/api/chat/friendRequest",
-        acceptFriendRequest: "https://zentrox-app-backend.vercel.app/api/chat/acceptRequest",
-        getFriendRequestList: "https://zentrox-app-backend.vercel.app/api/chat/FriendRequestList"
+        openDm: "zentrox-app-backend.onrender.com/api/chat/openDm",
+        getConversations: "zentrox-app-backend.onrender.com/api/chat/conversations",
+        sendFriendRequest: "zentrox-app-backend.onrender.com/api/chat/friendRequest",
+        acceptFriendRequest: "zentrox-app-backend.onrender.com/api/chat/acceptRequest",
+        getFriendRequestList: "zentrox-app-backend.onrender.com/api/chat/FriendRequestList"
     }
 };
